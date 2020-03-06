@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1058407586039",
+    "firebase_url": "https://workies-ffc13.firebaseio.com",
+    "project_id": "workies-ffc13",
+    "storage_bucket": "workies-ffc13.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1058407586039:android:6877c2efd7afe685e91bf2",
+        "android_client_info": {
+          "package_name": "com.indmind.workies"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1058407586039-tfm6hoevltkifl5uned3bqhd72rk5fov.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDS3mCjY2XfZDmDgRT-ZeaxUEInUtOqEEE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1058407586039-tfm6hoevltkifl5uned3bqhd72rk5fov.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
