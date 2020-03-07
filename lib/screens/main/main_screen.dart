@@ -36,14 +36,13 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = Theme.of(context).primaryColor;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
-        elevation: 0,
         title: Text(
           "Home Screen",
-          style: TextStyle(color: Colors.black),
         ),
       ),
       body: TabBarView(
@@ -56,7 +55,7 @@ class _MainScreenState extends State<MainScreen>
         animationDuration: Duration(seconds: 1),
         animationCurve: Curves.elasticOut,
         height: 60,
-        color: Colors.blue,
+        color: primaryColor,
         backgroundColor: Colors.white,
         items: <Widget>[
           Icon(Icons.hourglass_empty, color: Colors.white),
