@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:firebase_ml_vision/firebase_ml_vision.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:workies/painters/face_mark.dart';
@@ -13,6 +14,7 @@ class FaceDetectScreen extends StatefulWidget {
 class _FaceDetectScreenState extends State<FaceDetectScreen> {
   ui.Image _image;
   List<Face> _faces = List<Face>(0);
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,17 @@ class _FaceDetectScreenState extends State<FaceDetectScreen> {
               ),
             ),
           ),
+          _isLoading
+              ? Center(
+                  child: Container(
+                    constraints: BoxConstraints.expand(),
+                    color: Colors.black.withOpacity(0.4),
+                    child: CupertinoActivityIndicator(
+                      radius: 20.0,
+                    ),
+                  ),
+                )
+              : SizedBox.shrink(),
           Positioned(
             top: 0,
             right: 0,
@@ -79,6 +92,10 @@ class _FaceDetectScreenState extends State<FaceDetectScreen> {
 
     if (imageFile == null) return;
 
+    setState(() {
+      _isLoading = true;
+    });
+
     final image = FirebaseVisionImage.fromFile(imageFile);
 
     final faceDetector = FirebaseVision.instance.faceDetector(
@@ -100,6 +117,7 @@ class _FaceDetectScreenState extends State<FaceDetectScreen> {
         (image) => setState(() {
           _image = image;
           _faces = faces;
+          _isLoading = false;
         }),
       );
     }

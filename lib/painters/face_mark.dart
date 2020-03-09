@@ -17,30 +17,30 @@ class FaceMarkPainter extends CustomPainter {
         ..strokeWidth = 5
         ..style = PaintingStyle.stroke,
       "default": Paint()
-        ..color = Colors.green
+        ..color = Colors.orange
         ..strokeWidth = 5
-        ..style = PaintingStyle.stroke,
+        ..style = PaintingStyle.fill,
       "eye": Paint()
         ..color = Colors.blue
-        ..strokeWidth = 5
+        ..strokeWidth = 20
         ..style = PaintingStyle.stroke,
       "nose": Paint()
         ..color = Colors.yellow
         ..strokeWidth = 5
-        ..style = PaintingStyle.stroke,
+        ..style = PaintingStyle.fill,
       "lip": Paint()
         ..color = Colors.red
         ..strokeWidth = 5
-        ..style = PaintingStyle.stroke,
+        ..style = PaintingStyle.fill,
     };
     // canvas.translate(-150, -400);
 
     canvas.drawImage(_image, Offset.zero, Paint());
     _faces.forEach((face) {
-      canvas.drawRect(face.boundingBox, paints["dim"]);
+      // canvas.drawRect(face.boundingBox, paints["dim"]);
 
       _drawContours(face, canvas, paints);
-      _drawLabels(face, canvas, paints);
+      // _drawLabels(face, canvas, paints);
     });
   }
 
@@ -48,19 +48,41 @@ class FaceMarkPainter extends CustomPainter {
     final upperLip = f.getContour(FaceContourType.upperLipTop).positionsList;
     final upperLipBottom =
         f.getContour(FaceContourType.upperLipBottom).positionsList;
+
+    final lowerLipTop = f.getContour(FaceContourType.lowerLipTop).positionsList;
+    final lowerLipBottom =
+        f.getContour(FaceContourType.lowerLipBottom).positionsList;
+
     final leftEye = f.getContour(FaceContourType.leftEye).positionsList;
     final rightEye = f.getContour(FaceContourType.rightEye).positionsList;
+
     final noseBridge = f.getContour(FaceContourType.noseBridge).positionsList;
     final noseBottom = f.getContour(FaceContourType.noseBottom).positionsList;
+
     final face = f.getContour(FaceContourType.face).positionsList;
+
+    canvas.drawPath(_getPathFromPos(face), paints["default"]);
 
     canvas.drawPath(_getPathFromPos(upperLip), paints["lip"]);
     canvas.drawPath(_getPathFromPos(upperLipBottom), paints["lip"]);
+    canvas.drawPath(_getPathFromPos(lowerLipTop), paints["lip"]);
+    canvas.drawPath(_getPathFromPos(lowerLipBottom), paints["lip"]);
     canvas.drawPath(_getPathFromPos(leftEye), paints["eye"]);
     canvas.drawPath(_getPathFromPos(rightEye), paints["eye"]);
-    canvas.drawPath(_getPathFromPos(noseBridge), paints["nose"]);
-    canvas.drawPath(_getPathFromPos(noseBottom), paints["nose"]);
-    canvas.drawPath(_getPathFromPos(face), paints["default"]);
+
+    canvas.drawPath(_getNosePath(noseBridge, noseBottom), paints["nose"]);
+  }
+
+  _getNosePath(List<Offset> noseBridge, List<Offset> noseBottom) {
+    Offset topBridge = noseBridge[0];
+
+    final path = Path()..moveTo(topBridge.dx, topBridge.dy);
+
+    noseBottom.forEach((pos) => path.lineTo(pos.dx, pos.dy));
+
+    path.close();
+
+    return path;
   }
 
   void _drawLabels(Face face, ui.Canvas canvas, paints) {
