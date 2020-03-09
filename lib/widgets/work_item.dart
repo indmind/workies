@@ -17,6 +17,8 @@ class WorkItem extends StatelessWidget {
     DateTime startDate = work.start_date?.toDate();
     DateTime endDate = work.end_date?.toDate();
 
+    print("rendering ${work.message}");
+
     return Container(
       child: Padding(
         padding: const EdgeInsets.only(
